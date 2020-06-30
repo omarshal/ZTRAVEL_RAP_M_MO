@@ -1,0 +1,50 @@
+managed; // implementation in class zbp_i_travel_m_mo unique;
+
+define behavior for Z_I_Travel_M_MO alias travel
+persistent table ZTRAVEL_M_MO
+lock master
+//authorization master ( instance )
+etag master last_changed_at
+with additional save
+{
+  mapping for ZTRAVEL_M_MO corresponding;
+
+  create;
+  update;
+  delete;
+
+  association _Booking { create; }
+}
+
+define behavior for Z_I_Booking_M_MO alias booking
+persistent table ZBOOKING_M_MO
+lock dependent by _Travel
+//authorization dependent by <association>
+etag master last_changed_at
+{
+  field ( readonly ) travel_id;
+
+  mapping for ZBOOKING_M_MO corresponding;
+
+  update;
+  //delete;
+
+  //association _BookSupplement { create; }
+  association _Travel { }
+}
+
+define behavior for Z_I_BookSuppl_M_MO alias booksuppl
+persistent table ZBOOKSUPPL_M_MO
+lock dependent by _Travel
+//authorization dependent by <association>
+etag master last_changed_at
+{
+  field ( readonly ) travel_id, booking_id;
+
+  mapping for zbooksuppl_m_mo corresponding;
+
+  update;
+  //delete;
+
+  association _Travel { }
+}
