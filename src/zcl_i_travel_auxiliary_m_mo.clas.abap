@@ -1,0 +1,14 @@
+CLASS zcl_i_travel_auxiliary_m_mo DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+
+CLASS zcl_i_travel_auxiliary_m_mo IMPLEMENTATION.
+ENDCLASS.

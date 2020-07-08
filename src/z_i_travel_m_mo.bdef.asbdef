@@ -1,6 +1,7 @@
 managed; // implementation in class zbp_i_travel_m_mo unique;
 
 define behavior for Z_I_Travel_M_MO alias travel
+implementation in class zbp_i_travel_m_mo unique
 persistent table ZTRAVEL_M_MO
 lock master
 //authorization master ( instance )
@@ -14,9 +15,17 @@ with additional save
   delete;
 
   association _Booking { create; }
+
+  // instance actions
+  action acceptTravel result [1] $self;
+  action rejectTravel result [1] $self;
+
+  // instance action for copying travel instances
+  action createTravelByTemplate result [1] $self;
 }
 
 define behavior for Z_I_Booking_M_MO alias booking
+implementation in class zbp_i_booking_m_mo unique
 persistent table ZBOOKING_M_MO
 lock dependent by _Travel
 //authorization dependent by <association>
@@ -34,6 +43,7 @@ etag master last_changed_at
 }
 
 define behavior for Z_I_BookSuppl_M_MO alias booksuppl
+implementation in class zbp_i_bookingsupplement_m_mo unique
 persistent table ZBOOKSUPPL_M_MO
 lock dependent by _Travel
 //authorization dependent by <association>
